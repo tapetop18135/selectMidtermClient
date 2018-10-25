@@ -62,6 +62,7 @@ resultXMLtest = client.service.sended_something()
 
 ######## check_stock_sended_all
 resultXMLtest = client.service.check_stock_sended_all()
+# print(resultXMLtest)
 displayShowStock(resultXMLtest)
 
 
