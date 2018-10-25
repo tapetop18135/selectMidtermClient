@@ -13,7 +13,7 @@ var setTempd = {room_id:"80012" ,tempV: 11.8, humidV: 13.4}
 
 var getInfo = {text: 'get_information'}
 
-var setdata_Weight = {name:"dddddddddd Psssorsss", address:"5012 sda 23123 dxczas ", weight:23.60}
+var setdata_Weight = {name:"xxxx Peeesss", address:"5012 sda 23123 dxczas ", weight:23.60}
 
 soap.createClient(url, function(err, client) {
     // setTemp(client, setTempd)
@@ -45,15 +45,19 @@ function getTemp(cli, args){
 
 function get_all_stock_sended(cli, args){
     cli.check_stock_sended_all(function(err, result) {
-        console.log(result)
+        // console.log(result)
         result = result.check_stock_sended_allResult
         parseString(result, function (err, result) {
-            for(var i = 0; i < result.root.item.length ; i++){
-                console.log(`////////////// ${i} /////////////`);
-                console.log(`name : ${result.root.item[i]['name'][0]['_']}`);
-                console.log(`address : ${result.root.item[i]['address'][0]['_']}`);
-                console.log(`weight : ${result.root.item[i]['weight'][0]['_']}`);
-                console.log(`status_sended : ${result.root.item[i]['status_sended'][0]['_']} \n`);
+            if(result['Error']){
+                console.log('Error')
+            }else{
+                for(var i = 0; i < result.root.item.length ; i++){
+                    console.log(`////////////// ${i} /////////////`);
+                    console.log(`name : ${result.root.item[i]['name'][0]['_']}`);
+                    console.log(`address : ${result.root.item[i]['address'][0]['_']}`);
+                    console.log(`weight : ${result.root.item[i]['weight'][0]['_']}`);
+                    console.log(`status_sended : ${result.root.item[i]['status_sended'][0]['_']} \n`);
+                }
             }
         });
     })
