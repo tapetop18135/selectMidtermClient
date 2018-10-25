@@ -10,13 +10,20 @@ var parseString = require('xml2js').parseString;
 var url = 'http://127.0.0.1:8000/soapAPI1/?wsdl';
 var getTempd = {text: 'get_temp'};
 var setTempd = {room_id:"80012" ,tempV: 11.8, humidV: 13.4}
+
 var getInfo = {text: 'get_information'}
+
+var setdata_Weight = {name:"dddddddddd Psssorsss", address:"5012 sda 23123 dxczas ", weight:23.60}
 
 soap.createClient(url, function(err, client) {
     // setTemp(client, setTempd)
     // getTemp(client, getTempd)
-    getInformation(client, getInfo)
+    
+    // getInformation(client, getInfo)
 
+    // setdataweight(client, setdata_Weight)
+    // sended_something(client)
+    get_all_stock_sended(client)
 });
 
 function getTemp(cli, args){
@@ -29,6 +36,24 @@ function getTemp(cli, args){
                 console.log(`temp : ${result.root.item[i]['temp'][0]['_']}`);
                 console.log(`humid : ${result.root.item[i]['humid'][0]['_']}`);
                 console.log(`date : ${result.root.item[i]['date'][0]['_']} \n`);
+            }
+        });
+    })
+}
+
+
+
+function get_all_stock_sended(cli, args){
+    cli.check_stock_sended_all(function(err, result) {
+        console.log(result)
+        result = result.check_stock_sended_allResult
+        parseString(result, function (err, result) {
+            for(var i = 0; i < result.root.item.length ; i++){
+                console.log(`////////////// ${i} /////////////`);
+                console.log(`name : ${result.root.item[i]['name'][0]['_']}`);
+                console.log(`address : ${result.root.item[i]['address'][0]['_']}`);
+                console.log(`weight : ${result.root.item[i]['weight'][0]['_']}`);
+                console.log(`status_sended : ${result.root.item[i]['status_sended'][0]['_']} \n`);
             }
         });
     })
@@ -55,6 +80,19 @@ function getInformation(cli, args){
         });
     })
 }
+
+function setdataweight(cli, args){
+    cli.setDataWeight(args, function(err, result) {
+        console.log(result);
+    })
+}
+
+function sended_something(cli){
+    cli.sended_something(function(err, result) {
+        console.log(result);
+    })
+}
+
 
 function displayShow(result){
     for(var i = 0; i < result.root.item.length ; i++){
